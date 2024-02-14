@@ -8,11 +8,11 @@ const port = 3000;
 app.use(parser.json());
 
 //get method
-app.get("/", (req, res) => {
-  db.query("SELECT * FROM idk", (error, result) => {
-    response(200, result, "success", res);
-  });
-});
+// app.get("/", (req, res) => {
+//   db.query("SELECT * FROM idk", (error, result) => {
+//     response(200, result, "success", res);
+//   });
+// });
 
 //get by query
 app.get("/query", (req, res) => {
