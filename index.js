@@ -3,40 +3,48 @@ const parser = require("body-parser");
 const db = require("./connection");
 const response = require("./response");
 const app = express();
-const port = 3000;
+const port = 3002;
 
 app.use(parser.json());
 
 //get method
-// app.get("/", (req, res) => {
-//   db.query("SELECT * FROM idk", (error, result) => {
-//     response(200, result, "success", res);
-//   });
-// });
+app.get("/", (req, res) => {
+  db.query("SELECT * FROM gudang_1", (error, result) => {
+    response(200, result, "success", res);
+  });
+});
 
 //get by query
 app.get("/query", (req, res) => {
   const q = req.query.id;
-  const data = `SELECT * FROM idk WHERE id = ${q}`;
+  const data = `SELECT * FROM gudang_1 WHERE id = ${q}`;
   db.query(data, (error, result) => {
-    response(200, result, `your request to id = ${q}`, res);
+    response(200, result, `your requested to id = ${q}`, res);
   });
 });
 
 //get by params
 app.get("/params/:id", (req, res) => {
-  res.send(`your request to params = ${req.params.id}`);
+  const params = req.params.id;
+  const data = `SELECT * FROM gudang_1 WHERE id = ${params}`;
+  db.query(data, (err, fields) => {
+    response(200, fields, `your requested to params = ${params}`, res);
+  });
 });
 
 //add new data
 app.post("/send", (req, res) => {
-  const { kode, judul, pengarang, penerbit, tahun } = req.body;
-  const sql = `INSERT INTO idk (kode_buku,judul_buku,pengarang,penerbit,tahun_terbit) VALUES ('${kode}','${judul}','${pengarang}','${penerbit}',${tahun})`;
+  const { tanggal_shipping, tanggal_pengiriman, berat, alamat } = req.body;
+  const sql = `INSERT INTO gudang_1 (tgl_shipping,tgl_pengiriman,berat,alamat) VALUES ('${tanggal_shipping}','${tanggal_pengiriman}','${berat}','${alamat}')`;
   db.query(sql, (err, fields) => {
-    console.log(err);
     if (fields.affectedRows) {
-      console.log("masuk wir");
-    } else console.log("failed to send");
+      response(
+        200,
+        { sent: { tanggal_shipping, tanggal_pengiriman, berat, alamat } },
+        "Data successfully sent",
+        res
+      );
+    } else response(502, "bad traffic", "failed to send", res);
   });
 });
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <table>
+        <tr>
+          <td>Tanggal Shipping</td>
+          <td>:</td>
+          <td><input type="date" name="tgl_shipping" /></td>
+        </tr>
+        <tr>
+          <td>Tanggal Pengiriman</td>
+          <td>:</td>
+          <td><input type="date" /></td>
+        </tr>
+        <tr>
+          <td>Berat Barang</td>
+          <td>:</td>
+          <td><input type="text" maxlength="10" value="10 kg" /></td>
+        </tr>
+        <tr>
+          <td>Alamat</td>
+          <td>:</td>
+          <td>
+            <input
+              type="text"
+              maxlength="250"
+              name="alamat"
+              onchange="(e)=>{send(e.target.value)}"
+            />
+          </td>
+        </tr>
+      </table>
+      <button type="submit" onclick="send">Submit</button>
+    </form>
+    <script>
+      function send(e) {
+        console.log(e);
+      }
+    </script>
+  </body>
+</html>
